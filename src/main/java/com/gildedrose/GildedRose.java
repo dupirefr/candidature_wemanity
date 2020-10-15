@@ -34,7 +34,7 @@ class GildedRose {
             }
 
             if (!isSulfuras(item)) {
-                item.sellIn = item.sellIn - 1;
+                decreaseSalePeriod(item);
             }
 
             if (saleOver(item)) {
@@ -103,5 +103,9 @@ class GildedRose {
 
     private boolean saleOver(Item item) {
         return item.sellIn < 0;
+    }
+
+    private void decreaseSalePeriod(Item item) {
+        item.sellIn = item.sellIn - 1;
     }
 }
