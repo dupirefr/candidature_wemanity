@@ -1,6 +1,8 @@
 package com.gildedrose;
 
 class GildedRose {
+    public static final int OPTIMUM_QUALITY = 50;
+    public static final int FULLY_DEGRADED_QUALITY = 0;
     Item[] items;
 
     public GildedRose(Item[] items) {
@@ -9,51 +11,27 @@ class GildedRose {
 
     public void updateQuality() {
         for (Item item : items) {
-            if (!isSulfuras(item)) {
-                if (isRegular(item)) {
-                    if (notFullyDegradedYet(item)) {
-                        decreaseQuality(item);
-                    }
+            if (isRegular(item)) {
+                decreaseSalePeriod(item);
+                decreaseQuality(item);
+            } else if (isAgedBrie(item)) {
+                decreaseSalePeriod(item);
+                increaseQualityBy(item, saleOver(item) ? 2 : 1);
+            } else if (isBackstagePasses(item)) {
+                increaseQualityBy(item, 1);
 
-                    decreaseSalePeriod(item);
+                if (withinTenDaysOfSellDate(item)) {
+                    increaseQualityBy(item, 1);
+                }
 
-                    if (saleOver(item) && notFullyDegradedYet(item)) {
-                        decreaseQuality(item);
-                    }
-                } else {
-                    if (isAgedBrie(item)) {
-                        if (notOptimalQualityYet(item)) {
-                            increaseQuality(item);
-                        }
+                if (withinFiveDaysOfSellDate(item)) {
+                    increaseQualityBy(item, 1);
+                }
 
-                        decreaseSalePeriod(item);
+                decreaseSalePeriod(item);
 
-                        if (saleOver(item) && notOptimalQualityYet(item)) {
-                            increaseQuality(item);
-                        }
-                    } else if (isBackstagePasses(item)) {
-                        if (notOptimalQualityYet(item)) {
-                            increaseQuality(item);
-                        }
-
-                        if (withinTenDaysOfSellDate(item)) {
-                            if (notOptimalQualityYet(item)) {
-                                increaseQuality(item);
-                            }
-                        }
-
-                        if (withinFiveDaysOfSellDate(item)) {
-                            if (notOptimalQualityYet(item)) {
-                                increaseQuality(item);
-                            }
-                        }
-
-                        decreaseSalePeriod(item);
-
-                        if (saleOver(item)) {
-                            fullyDegrade(item);
-                        }
-                    }
+                if (saleOver(item)) {
+                    fullyDegrade(item);
                 }
             }
         }
@@ -75,24 +53,20 @@ class GildedRose {
         return item.name.equals("Sulfuras, Hand of Ragnaros");
     }
 
-    private boolean notFullyDegradedYet(Item item) {
-        return item.quality > 0;
-    }
-
     private void decreaseQuality(Item item) {
-        item.quality -= 1;
+        item.quality = Math.max(item.quality - decreaseSpeed(item), FULLY_DEGRADED_QUALITY);
     }
 
-    private void increaseQuality(Item item) {
-        item.quality += 1;
+    private int decreaseSpeed(Item item) {
+        return saleOver(item) ? 2 : 1;
+    }
+
+    private void increaseQualityBy(Item item, int increaseSpeed) {
+        item.quality = Math.min(item.quality + increaseSpeed, OPTIMUM_QUALITY);
     }
 
     private void fullyDegrade(Item item) {
-        item.quality = 0;
-    }
-
-    private boolean notOptimalQualityYet(Item item) {
-        return item.quality < 50;
+        item.quality = FULLY_DEGRADED_QUALITY;
     }
 
     private boolean withinTenDaysOfSellDate(Item item) {
