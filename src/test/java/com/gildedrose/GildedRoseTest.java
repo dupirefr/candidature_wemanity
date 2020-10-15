@@ -28,7 +28,8 @@ class GildedRoseTest {
           regularItemsDataSet(),
           agedBrieDataSet(),
           sulfurasDataSet(),
-          backstagePassesDataSet()
+          backstagePassesDataSet(),
+          conjuredDataSet()
         );
     }
 
@@ -99,6 +100,26 @@ class GildedRoseTest {
             new Item(itemName, 10, 11),
             new Item(itemName, 9, 12),
             new Item(itemName, 4, 13),
+            new Item(itemName, -1, 0)
+          )
+        );
+    }
+
+    private static Arguments conjuredDataSet() {
+        String itemName = "Conjured Mana Cake";
+
+        return Arguments.arguments(
+          "Conjured",
+          new Item[]{
+            new Item(itemName, 1, 10),
+            new Item(itemName, 0, 10),
+            new Item(itemName, 1, 1),
+            new Item(itemName, 0, 3)
+          },
+          Arrays.asList(
+            new Item(itemName, 0, 8),
+            new Item(itemName, -1, 6),
+            new Item(itemName, 0, 0),
             new Item(itemName, -1, 0)
           )
         );
