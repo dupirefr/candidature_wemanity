@@ -25,7 +25,8 @@ class GildedRoseTest {
     private static Stream<Arguments> dataSet() {
         return Stream.of(
           regularItemsDataSet(),
-          agedBrieDataSet()
+          agedBrieDataSet(),
+          sulfurasDataSet()
         );
     }
 
@@ -59,6 +60,20 @@ class GildedRoseTest {
             new Item("Aged Brie", 0, 1),
             new Item("Aged Brie", -1, 2),
             new Item("Aged Brie", -1, 50)
+          )
+        );
+    }
+
+    private static Arguments sulfurasDataSet() {
+        return Arguments.arguments(
+          "Sulfuras",
+          new Item[]{
+            new Item("Sulfuras, Hand of Ragnaros", 1, 80),
+            new Item("Sulfuras, Hand of Ragnaros", 0, 80)
+          },
+          Arrays.asList(
+            new Item("Sulfuras, Hand of Ragnaros", 1, 80),
+            new Item("Sulfuras, Hand of Ragnaros", 0, 80)
           )
         );
     }
