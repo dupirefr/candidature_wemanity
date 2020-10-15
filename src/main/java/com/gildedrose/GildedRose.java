@@ -14,18 +14,18 @@ class GildedRose {
                     decreaseQuality(item);
                 }
             } else {
-                if (notOptimalQuality(item)) {
+                if (notOptimalQualityYet(item)) {
                     increaseQuality(item);
 
                     if (isBackstagePasses(item)) {
                         if (withinTenDaysOfSellDate(item)) {
-                            if (notOptimalQuality(item)) {
+                            if (notOptimalQualityYet(item)) {
                                 increaseQuality(item);
                             }
                         }
 
                         if (withinFiveDaysOfSellDate(item)) {
-                            if (notOptimalQuality(item)) {
+                            if (notOptimalQualityYet(item)) {
                                 increaseQuality(item);
                             }
                         }
@@ -38,20 +38,12 @@ class GildedRose {
             }
 
             if (saleOver(item)) {
-                if (!isAgedBrie(item)) {
-                    if (!isBackstagePasses(item)) {
-                        if (notFullyDegradedYet(item)) {
-                            if (!isSulfuras(item)) {
-                                decreaseQuality(item);
-                            }
-                        }
-                    } else {
-                        fullyDegrade(item);
-                    }
-                } else {
-                    if (notOptimalQuality(item)) {
-                        increaseQuality(item);
-                    }
+                if (isRegular(item) && notFullyDegradedYet(item)) {
+                    decreaseQuality(item);
+                } else if (isBackstagePasses(item)) {
+                    fullyDegrade(item);
+                } else if (isAgedBrie(item) && notOptimalQualityYet(item)) {
+                    increaseQuality(item);
                 }
             }
         }
@@ -89,7 +81,7 @@ class GildedRose {
         item.quality = 0;
     }
 
-    private boolean notOptimalQuality(Item item) {
+    private boolean notOptimalQualityYet(Item item) {
         return item.quality < 50;
     }
 
