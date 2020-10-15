@@ -1,8 +1,11 @@
 package com.gildedrose;
 
+import com.gildedrose.services.ItemSaleManager;
+
 class GildedRose {
-    public static final int OPTIMUM_QUALITY = 50;
-    public static final int FULLY_DEGRADED_QUALITY = 0;
+    private static final int OPTIMUM_QUALITY = 50;
+    private static final int FULLY_DEGRADED_QUALITY = 0;
+
     Item[] items;
 
     public GildedRose(Item[] items) {
@@ -11,14 +14,16 @@ class GildedRose {
 
     public void updateQuality() {
         for (Item item : items) {
+            ItemSaleManager saleManager = new ItemSaleManager();
+
             if (isRegular(item)) {
-                decreaseSalePeriod(item);
+                saleManager.decreaseSalePeriod(item);
                 decreaseQuality(item);
             } else if (isAgedBrie(item)) {
-                decreaseSalePeriod(item);
+                saleManager.decreaseSalePeriod(item);
                 increaseQualityBy(item, saleOver(item) ? 2 : 1);
             } else if (isBackstagePasses(item)) {
-                decreaseSalePeriod(item);
+                saleManager.decreaseSalePeriod(item);
                 if (saleOver(item)) {
                     fullyDegrade(item);
                 } else if (withinFiveDaysOfSellDate(item)) {
@@ -74,9 +79,5 @@ class GildedRose {
 
     private boolean saleOver(Item item) {
         return item.sellIn < 0;
-    }
-
-    private void decreaseSalePeriod(Item item) {
-        item.sellIn = item.sellIn - 1;
     }
 }
