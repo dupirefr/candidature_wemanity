@@ -10,7 +10,7 @@ class GildedRose {
     public void updateQuality() {
         for (Item item : items) {
             if (isRegular(item)) {
-                if (item.quality > 0) {
+                if (notFullyDegradedYet(item)) {
                     item.quality = item.quality - 1;
                 }
             } else {
@@ -40,7 +40,7 @@ class GildedRose {
             if (item.sellIn < 0) {
                 if (!isAgedBrie(item)) {
                     if (!isBackstagePasses(item)) {
-                        if (item.quality > 0) {
+                        if (notFullyDegradedYet(item)) {
                             if (!isSulfuras(item)) {
                                 item.quality = item.quality - 1;
                             }
@@ -71,5 +71,9 @@ class GildedRose {
 
     private boolean isSulfuras(Item item) {
         return item.name.equals("Sulfuras, Hand of Ragnaros");
+    }
+
+    private boolean notFullyDegradedYet(Item item) {
+        return item.quality > 0;
     }
 }
