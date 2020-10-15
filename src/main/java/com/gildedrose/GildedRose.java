@@ -46,7 +46,7 @@ class GildedRose {
                             }
                         }
                     } else {
-                        item.quality = 0;
+                        fullyDegrade(item);
                     }
                 } else {
                     if (item.quality < 50) {
@@ -83,5 +83,9 @@ class GildedRose {
 
     private void increaseQuality(Item item) {
         item.quality += 1;
+    }
+
+    private void fullyDegrade(Item item) {
+        item.quality = 0;
     }
 }
