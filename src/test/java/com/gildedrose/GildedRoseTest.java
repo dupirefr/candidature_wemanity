@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class GildedRoseTest {
+
     @DisplayName("Update quality rules test for:")
     @ParameterizedTest(name = "{0}")
     @MethodSource("dataSet")
@@ -26,7 +27,8 @@ class GildedRoseTest {
         return Stream.of(
           regularItemsDataSet(),
           agedBrieDataSet(),
-          sulfurasDataSet()
+          sulfurasDataSet(),
+          backstagePassesDataSet()
         );
     }
 
@@ -49,31 +51,55 @@ class GildedRoseTest {
     }
 
     private static Arguments agedBrieDataSet() {
+        String itemName = "Aged Brie";
+
         return Arguments.arguments(
           "Aged Brie",
           new Item[]{
-            new Item("Aged Brie", 1, 0),
-            new Item("Aged Brie", 0, 0),
-            new Item("Aged Brie", 0, 50)
+            new Item(itemName, 1, 0),
+            new Item(itemName, 0, 0),
+            new Item(itemName, 0, 50)
           },
           Arrays.asList(
-            new Item("Aged Brie", 0, 1),
-            new Item("Aged Brie", -1, 2),
-            new Item("Aged Brie", -1, 50)
+            new Item(itemName, 0, 1),
+            new Item(itemName, -1, 2),
+            new Item(itemName, -1, 50)
           )
         );
     }
 
     private static Arguments sulfurasDataSet() {
+        String itemName = "Sulfuras, Hand of Ragnaros";
+
         return Arguments.arguments(
           "Sulfuras",
           new Item[]{
-            new Item("Sulfuras, Hand of Ragnaros", 1, 80),
-            new Item("Sulfuras, Hand of Ragnaros", 0, 80)
+            new Item(itemName, 1, 80),
+            new Item(itemName, 0, 80)
           },
           Arrays.asList(
-            new Item("Sulfuras, Hand of Ragnaros", 1, 80),
-            new Item("Sulfuras, Hand of Ragnaros", 0, 80)
+            new Item(itemName, 1, 80),
+            new Item(itemName, 0, 80)
+          )
+        );
+    }
+
+    private static Arguments backstagePassesDataSet() {
+        String itemName = "Backstage passes to a TAFKAL80ETC concert";
+
+        return Arguments.arguments(
+          "Backstage passes",
+          new Item[]{
+            new Item(itemName, 11, 10),
+            new Item(itemName, 10, 10),
+            new Item(itemName, 5, 10),
+            new Item(itemName, 0, 10)
+          },
+          Arrays.asList(
+            new Item(itemName, 10, 11),
+            new Item(itemName, 9, 12),
+            new Item(itemName, 4, 13),
+            new Item(itemName, -1, 0)
           )
         );
     }
