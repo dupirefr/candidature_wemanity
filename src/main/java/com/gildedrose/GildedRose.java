@@ -18,13 +18,13 @@ class GildedRose {
                     increaseQuality(item);
 
                     if (isBackstagePasses(item)) {
-                        if (item.sellIn < 11) {
+                        if (withinTenDaysOfSellDate(item)) {
                             if (notOptimalQuality(item)) {
                                 increaseQuality(item);
                             }
                         }
 
-                        if (item.sellIn < 6) {
+                        if (withinFiveDaysOfSellDate(item)) {
                             if (notOptimalQuality(item)) {
                                 increaseQuality(item);
                             }
@@ -37,7 +37,7 @@ class GildedRose {
                 item.sellIn = item.sellIn - 1;
             }
 
-            if (item.sellIn < 0) {
+            if (saleOver(item)) {
                 if (!isAgedBrie(item)) {
                     if (!isBackstagePasses(item)) {
                         if (notFullyDegradedYet(item)) {
@@ -91,5 +91,17 @@ class GildedRose {
 
     private boolean notOptimalQuality(Item item) {
         return item.quality < 50;
+    }
+
+    private boolean withinTenDaysOfSellDate(Item item) {
+        return item.sellIn < 11;
+    }
+
+    private boolean withinFiveDaysOfSellDate(Item item) {
+        return item.sellIn < 6;
+    }
+
+    private boolean saleOver(Item item) {
+        return item.sellIn < 0;
     }
 }
