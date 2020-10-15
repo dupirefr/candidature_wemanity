@@ -9,41 +9,41 @@ class GildedRose {
 
     public void updateQuality() {
         for (Item item : items) {
-            if (isRegular(item)) {
-                if (notFullyDegradedYet(item)) {
-                    decreaseQuality(item);
-                }
-            } else {
-                if (notOptimalQualityYet(item)) {
-                    increaseQuality(item);
+            if (!isSulfuras(item)) {
+                if (isRegular(item)) {
+                    if (notFullyDegradedYet(item)) {
+                        decreaseQuality(item);
+                    }
+                } else {
+                    if (notOptimalQualityYet(item)) {
+                        increaseQuality(item);
 
-                    if (isBackstagePasses(item)) {
-                        if (withinTenDaysOfSellDate(item)) {
-                            if (notOptimalQualityYet(item)) {
-                                increaseQuality(item);
+                        if (isBackstagePasses(item)) {
+                            if (withinTenDaysOfSellDate(item)) {
+                                if (notOptimalQualityYet(item)) {
+                                    increaseQuality(item);
+                                }
                             }
-                        }
 
-                        if (withinFiveDaysOfSellDate(item)) {
-                            if (notOptimalQualityYet(item)) {
-                                increaseQuality(item);
+                            if (withinFiveDaysOfSellDate(item)) {
+                                if (notOptimalQualityYet(item)) {
+                                    increaseQuality(item);
+                                }
                             }
                         }
                     }
                 }
-            }
 
-            if (!isSulfuras(item)) {
                 decreaseSalePeriod(item);
-            }
-
-            if (saleOver(item)) {
-                if (isRegular(item) && notFullyDegradedYet(item)) {
-                    decreaseQuality(item);
-                } else if (isBackstagePasses(item)) {
-                    fullyDegrade(item);
-                } else if (isAgedBrie(item) && notOptimalQualityYet(item)) {
-                    increaseQuality(item);
+                
+                if (saleOver(item)) {
+                    if (isRegular(item) && notFullyDegradedYet(item)) {
+                        decreaseQuality(item);
+                    } else if (isBackstagePasses(item)) {
+                        fullyDegrade(item);
+                    } else if (isAgedBrie(item) && notOptimalQualityYet(item)) {
+                        increaseQuality(item);
+                    }
                 }
             }
         }
