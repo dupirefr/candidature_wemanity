@@ -1,9 +1,8 @@
 package com.gildedrose.services;
 
-import com.gildedrose.Item;
+public interface ItemSaleManager {
+    int FULLY_DEGRADED_QUALITY = 0;
+    int OPTIMUM_QUALITY = 50;
 
-public class ItemSaleManager {
-    public void decreaseSalePeriod(Item item) {
-        item.sellIn = item.sellIn - 1;
-    }
+    void sell();
 }
