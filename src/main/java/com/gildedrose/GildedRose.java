@@ -18,20 +18,15 @@ class GildedRose {
                 decreaseSalePeriod(item);
                 increaseQualityBy(item, saleOver(item) ? 2 : 1);
             } else if (isBackstagePasses(item)) {
-                increaseQualityBy(item, 1);
-
-                if (withinTenDaysOfSellDate(item)) {
-                    increaseQualityBy(item, 1);
-                }
-
-                if (withinFiveDaysOfSellDate(item)) {
-                    increaseQualityBy(item, 1);
-                }
-
                 decreaseSalePeriod(item);
-
                 if (saleOver(item)) {
                     fullyDegrade(item);
+                } else if (withinFiveDaysOfSellDate(item)) {
+                    increaseQualityBy(item, 3);
+                } else if (withinTenDaysOfSellDate(item)) {
+                    increaseQualityBy(item, 2);
+                } else {
+                    increaseQualityBy(item, 1);
                 }
             }
         }
@@ -70,11 +65,11 @@ class GildedRose {
     }
 
     private boolean withinTenDaysOfSellDate(Item item) {
-        return item.sellIn < 11;
+        return item.sellIn < 10;
     }
 
     private boolean withinFiveDaysOfSellDate(Item item) {
-        return item.sellIn < 6;
+        return item.sellIn < 5;
     }
 
     private boolean saleOver(Item item) {
