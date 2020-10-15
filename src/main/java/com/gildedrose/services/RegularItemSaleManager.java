@@ -12,22 +12,22 @@ public class RegularItemSaleManager implements ItemSaleManager {
     @Override
     public void sell() {
         decreaseSalePeriod(item);
-        decreaseQuality(item);
+        decreaseQualityBy(item, decreaseSpeed(item));
     }
 
-    protected void decreaseSalePeriod(Item item) {
+    protected final void decreaseSalePeriod(Item item) {
         item.sellIn = item.sellIn - 1;
     }
 
-    private void decreaseQuality(Item item) {
-        item.quality = Math.max(item.quality - decreaseSpeed(item), FULLY_DEGRADED_QUALITY);
+    protected final void decreaseQualityBy(Item item, int decreaseSpeed) {
+        item.quality = Math.max(item.quality - decreaseSpeed, FULLY_DEGRADED_QUALITY);
     }
 
-    private int decreaseSpeed(Item item) {
+    protected final int decreaseSpeed(Item item) {
         return saleOver(item) ? 2 : 1;
     }
 
-    protected boolean saleOver(Item item) {
+    protected final boolean saleOver(Item item) {
         return item.sellIn < 0;
     }
 }
