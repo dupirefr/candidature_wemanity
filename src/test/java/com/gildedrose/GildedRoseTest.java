@@ -31,6 +31,26 @@ class GildedRoseTest {
         assertItemsEqual(expectedItems, Arrays.asList(itemsInTheStore));
     }
 
+    @Test
+    void updateQuality_agedBrie() {
+        Item[] itemsInTheStore = new Item[]{
+          new Item("Aged Brie", 1, 0),
+          new Item("Aged Brie", 0, 0),
+          new Item("Aged Brie", 0, 50)
+        };
+
+        GildedRose app = new GildedRose(itemsInTheStore);
+        app.updateQuality();
+
+        List<Item> expectedItems = Arrays.asList(
+          new Item("Aged Brie", 0, 1),
+          new Item("Aged Brie", -1, 2),
+          new Item("Aged Brie", -1, 50)
+        );
+
+        assertItemsEqual(expectedItems, Arrays.asList(itemsInTheStore));
+    }
+
     void assertItemsEqual(List<Item> expected, List<Item> actual) {
         assertThat(actual).describedAs("There should be the same number of actual than expected items").hasSameSizeAs(expected);
         for (int i = 0; i < actual.size(); i++) {
