@@ -14,35 +14,45 @@ class GildedRose {
                     if (notFullyDegradedYet(item)) {
                         decreaseQuality(item);
                     }
+
+                    decreaseSalePeriod(item);
+
+                    if (saleOver(item) && notFullyDegradedYet(item)) {
+                        decreaseQuality(item);
+                    }
                 } else {
-                    if (notOptimalQualityYet(item)) {
-                        increaseQuality(item);
+                    if (isAgedBrie(item)) {
+                        if (notOptimalQualityYet(item)) {
+                            increaseQuality(item);
+                        }
 
-                        if (isBackstagePasses(item)) {
-                            if (withinTenDaysOfSellDate(item)) {
-                                if (notOptimalQualityYet(item)) {
-                                    increaseQuality(item);
-                                }
-                            }
+                        decreaseSalePeriod(item);
 
-                            if (withinFiveDaysOfSellDate(item)) {
-                                if (notOptimalQualityYet(item)) {
-                                    increaseQuality(item);
-                                }
+                        if (saleOver(item) && notOptimalQualityYet(item)) {
+                            increaseQuality(item);
+                        }
+                    } else if (isBackstagePasses(item)) {
+                        if (notOptimalQualityYet(item)) {
+                            increaseQuality(item);
+                        }
+
+                        if (withinTenDaysOfSellDate(item)) {
+                            if (notOptimalQualityYet(item)) {
+                                increaseQuality(item);
                             }
                         }
-                    }
-                }
 
-                decreaseSalePeriod(item);
-                
-                if (saleOver(item)) {
-                    if (isRegular(item) && notFullyDegradedYet(item)) {
-                        decreaseQuality(item);
-                    } else if (isBackstagePasses(item)) {
-                        fullyDegrade(item);
-                    } else if (isAgedBrie(item) && notOptimalQualityYet(item)) {
-                        increaseQuality(item);
+                        if (withinFiveDaysOfSellDate(item)) {
+                            if (notOptimalQualityYet(item)) {
+                                increaseQuality(item);
+                            }
+                        }
+
+                        decreaseSalePeriod(item);
+
+                        if (saleOver(item)) {
+                            fullyDegrade(item);
+                        }
                     }
                 }
             }
