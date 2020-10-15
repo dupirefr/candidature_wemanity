@@ -21,3 +21,12 @@ sourceCompatibility = '1.8'
 test {
     useJUnitPlatform()
 }
+
+jar {
+    manifest {
+        attributes(
+                'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+                'Main-Class': 'com.gildedrose.FakeStore'
+        )
+    }
+}
